@@ -1,0 +1,27 @@
+
+table {
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#delete_td {
+    background-color: red;
+}
+
+#edit_td {
+    background-color: blue;
+}
+
+td {
+    border: 1px solid black;
+}
+
+.user {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.user p {
+    display: inline;
+}

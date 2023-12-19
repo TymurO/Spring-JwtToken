@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <link rel="stylesheet" type="text/css" href="/studentList.css" />
+</head>
+<body>
+    <div class="user">
+        <p th:text="${username}"/>
+        <form action="/log/out" method="post">
+            <input type="submit" value="Logout">
+        </form>
+    </div>
+    <a href="/students/u/sorted/rank">
+        <button>Сортувати за рейтингом</button>
+    </a>
+    <a href="/students/u">
+        <button>Скинути налаштування</button>
+    </a><br>
+    <a href="/students/a/add_form" th:if="${role == 'admin'}">
+        <button>Додати студента</button>
+    </a><br>
+    <form action="/students/u/search" method="get">
+        <input type="text" name="search" placeholder="Пошук">
+        <input type="submit" value="Знайти">
+    </form>
+    <form action="/students/u/send" method="post">
+        <input type="submit" value="Надіслати звіт">
+    </form>
+    <table>
+        <tr>
+            <td>Прізвище</td>
+            <td>Ім'я</td>
+            <td>По батькові</td>
+            <td>День народження</td>
+            <td>Стать</td>
+            <td>Оцінка</td>
+        </tr>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.surname}">Прізвище</td>
+            <td th:text="${student.name}">Ім'я</td>
+            <td th:text="${student.pname}">По батькові</td>
+            <td th:text="${student.getFormattedDate()}">День народження</td>
+            <td th:text="${student.gender} ? Чоловік : Жінка">Стать</td>
+            <td th:text="${student.rank}">Оцінка</td>
+            <td th:if="${role == 'admin'}">
+                <a th:href="@{/students/a/edit_form/{id}(id=${student.id})}"><button id="edit_td">Редагувати</button></a>
+            </td>
+            <td th:if="${role == 'admin'}">
+                <form th:action="@{/students/a/delete/{id}(id=${student.id})}" th:method="POST">
+                    <input id="delete_td" onclick="return confirm('Ви впевнені?')" type="submit" value="Видалити">
+                </form>
+            </td>
+            <td>
+                <a th:href="@{/students/u/dop_form/{id}(id=${student.id})}"><button>Додаткова інформація</button></a>
+            </td>
+        </tr>
+    </table>
+    <div class="token" th:if="${token}">
+        <p id="token" th:text="${token}"/>
+    </div>
+    <script src="/authToken.js"></script>
+</body>
+</html>

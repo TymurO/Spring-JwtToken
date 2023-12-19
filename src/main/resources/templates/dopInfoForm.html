@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dop Info</title>
+</head>
+<body>
+    <div class="user">
+        <p th:text="${username}"/>
+        <form action="/log/out" method="post">
+            <input type="submit" value="Logout">
+        </form>
+    </div>
+    <form th:action="@{/students/a/dop_info/{id}(id=*{student.getId()})}" method="post" th:object="${student}">
+        <p style="display: inline; font-weight: bold;" th:text="*{student.surname}"/>
+        <p style="display: inline; font-weight: bold;" th:text="*{student.name}"/>
+        <p style="display: inline; font-weight: bold;" th:text="*{student.pname}"/><br>
+        <p style="display: inline; font-weight: bold;" th:text="*{student.getFormattedDate()}"/>
+        <p style="display: inline; font-weight: bold;" th:text="*{student.gender} ? Чоловік : Жінка"/>
+        <p style="display: inline; font-weight: bold;" th:text="*{student.rank}"/><br>
+        <p style="color: red" th:if="${error}" th:text="${error}"/>
+        <input type="hidden" th:field="*{id}" th:value="*{id}">
+        <label for="contract">Контракт</label>
+        <select name="contract" id="contract" th:field="*{contract}">
+            <option value="true">Так</option>
+            <option value="false">Ні</option>
+        </select><br>
+        <label for="scholarship">Стипендія</label>
+        <select name="scholarship" id="scholarship" th:field="*{scholarship}">
+            <option value="true">Так</option>
+            <option value="false">Ні</option>
+        </select><br>
+        <label for="email">Електрона почта</label>
+        <input th:value="*{email}" th:field="*{email}" type="text" name="email" id="email" required pattern=".+@cs\.khpi\.edu\.ua" title="*@cs.khpi.edu.ua"><br>
+        <label for="phone">Телефон</label>
+        <input th:value="*{phone}" th:field="*{phone}" type="text" name="phone" id="phone" required pattern="\+[0-9]{12}" title="+NNNNNNNNNNNN"><br>
+        <input type="submit" value="Зберегти" th:if="${role == 'admin'}">
+    </form>
+    <a href="/students/u"><button>Повернутись</button></a>
+</body>
+</html>

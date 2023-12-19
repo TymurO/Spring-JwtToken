@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit student</title>
+</head>
+<body>
+    <div class="user">
+        <p th:text="${username}"/>
+        <form action="/log/out" method="post">
+            <input type="submit" value="Logout">
+        </form>
+    </div>
+    <form action="/students/a/edit" method="post" th:object="${student}">
+        <input type="hidden" name="id" th:value="*{id}">
+        <label for="surname">Прізвище</label>
+        <input type="text" id="surname" name="surname" required th:value="*{surname}"><br>
+        <label for="name">Ім'я</label>
+        <input type="text" id="name" name="name" required th:value="*{name}"><br>
+        <label for="pname">По батькові</label>
+        <input type="text" id="pname" name="pname" required th:value="*{pname}"><br>
+        <label for="birthday">День народження</label>
+        <input type="date" id="birthday" name="birthday" required th:value="*{birthday}"><br>
+        <label for="gender">Стать</label>
+        <select name="gender" id="gender" required th:field="*{gender}">
+            <option value="true">Чоловік</option>
+            <option value="false">Жінка</option>
+        </select><br>
+        <label for="rank">Оцінка</label>
+        <input type="number" min="120" max="200" id="rank" name="rank" required step="0.1" th:value="*{rank}"><br>
+        <input type="submit" value="Зберегти">
+        <a href="/students/u"><button>Повернутись</button></a>
+    </form>
+</body>
+</html>
